@@ -1372,10 +1372,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * @param options Optional options.
      */
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
-        if (this.config.responseType === 'code') {
+        if (this.config.responseType === 'code' || this.config.responseType === 'code id_token') {
             return this.tryLoginCodeFlow().then(_ => true);
-        }
-        else {
+        } else {
             return this.tryLoginImplicitFlow(options);
         }
     }
@@ -2136,7 +2135,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         additionalState = '',
         params = {}
     ) {
-        if (this.responseType === 'code') {
+        if (this.responseType === 'code' || this.responseType === 'code id_token') {
             return this.initCodeFlow(additionalState, params);
         } else {
             return this.initImplicitFlow(additionalState, params);
